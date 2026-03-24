@@ -13,6 +13,11 @@
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "mongoose": "^8.23.0"
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.10.1",
+    "graphql-http": "^1.22.4",
+    "mongoose": "^8.23.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

@@ -72,6 +72,7 @@ app.get('/',(req,res)=>{
  *                         type: string
  *                         example: Akash
  *                       College:
+ * 
  *                         type: string
  *                         example: NHCE
  */

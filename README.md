@@ -18,6 +18,18 @@ npm -v
 npm install express
 ```
 
+#### To install Swagger docs run this (Exp-4)
+
+```bash
+npm install swagger-jsdoc swagger-ui-express
+```
+
+#### To install GraphQL packages run this (exp-5)
+
+```bash
+npm install express-graphql graphql-http
+```
+
 ## Key learnings
 
 Since your project is already set to "type": "module", let’s fix your file properly.
