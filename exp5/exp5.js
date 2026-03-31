@@ -1,53 +1,70 @@
-/*Building GraphQL API's*/
 import express from 'express';
 import {graphqlHTTP} from 'express-graphql';
 import {buildSchema} from 'graphql';
 
-const app=express();
-const PORT=5000;
+const app = express();
+const port = 5000;
 
-//sample data
-let books=[
-    {'id':1,'Title':"Harry Potter",'Author':'J.K Rowling'},
-    {'id':2,'Title':"Austrian Painter",'Author':'Blitzkreg'},
-    {'id':3,'Title':"Journey to the center of Earth",'Author':'Jules Verne'},
+// Sample Data
+let books = [
+    { id: 1, title: "Akash Gaddi's Dark Secrets", author: "Akash Gaddi" },
+    { id: 2, title: "Big Brain Amith", author: "Huli Amith" },
+    { id: 3, title: "The Tale of a Painter", author: "A. Hit*er" }
 ];
 
-//define schema
+// 1. Define Schema
 const myschema = buildSchema(`
-    type Book {
-        id: Int
-        Title: String
-        Author: String
-    }
+  type Book {
+    id: Int
+    title: String
+    author: String
+  }
 
-    type Query {
-        books: [Book]
-        book(id: Int!): Book
-    }
+  type Query {
+    getBooks: [Book]
+    getBook(id: Int!): Book
+  }
+
+  type Mutation {
+    addBook(title: String!, author: String!): Book
+    deleteBook(id: Int!): Book
+    updateBook(id: Int!, title: String, author: String): Book
+  }
 `);
 
-const root={
-    getBooks:()=>books,
-    getBook:({id})=>books.find(b=>b.id===id),
-    addBook:({title,author})=>{
-        const newBook={
-            id:books.length+1,
-            title,
-            author
-        };
-        books.push(newBook);
-        return newBook;
-    }
+// 2. Define Resolvers
+const root = {
+  getBooks: () => books,
+  getBook: ({ id }) => books.find(b => b.id === id),
+  addBook: ({ title, author }) => {
+    const newBook = { id: books.length + 1, title, author };
+    books.push(newBook);
+    return newBook;
+  },
+  deleteBook: ({ id }) => {
+    const index = books.findIndex(b => b.id === id);
+    if (index === -1) throw new Error("Book not found");
+    const deleted = books[index];
+    books.splice(index, 1);
+    return deleted;
+  },
+  updateBook: ({ id, title, author }) => {
+    const book = books.find(b => b.id === id);
+    if (!book) throw new Error("Book not found");
+    if (title) book.title = title;
+    if (author) book.author = author;
+    return book;
+  }
 };
 
-//3. Setup GraphQL endpoint
-app.use('/graphql',graphqlHTTP({
-    schema:myschema,
-    rootValue:root,
-    graphiql:true //enables UI
+
+// 3. Setup GraphQL endpoint
+app.use('/graphql', graphqlHTTP({
+    schema: myschema,
+    rootValue: root,
+    graphiql: true // enables UI
 }));
 
-app.listen(PORT,()=>{
-    console.log(`Server Running on http://localhost:${PORT}/graphql`);
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}/graphql`);
 });
