@@ -9,7 +9,6 @@ const port = 5000;
 let books = [
     { id: 1, title: "Akash Gaddi's Dark Secrets", author: "Akash Gaddi" },
     { id: 2, title: "Big Brain Amith", author: "Huli Amith" },
-    { id: 3, title: "The Tale of a Painter", author: "A. Hit*er" }
 ];
 
 // 1. Define Schema
