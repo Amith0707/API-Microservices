@@ -86,6 +86,7 @@ app.post('/login',(req,res)=>{
         {id:student.id,email:student.email},
         SECRET,{expiresIn:'1h'}
     );
+    res.json({token});
 });
 
 app.listen(PORT,()=>{
